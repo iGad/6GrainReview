@@ -1,0 +1,43 @@
+﻿@model FarmApp.ViewModels.FarmViewModel
+
+@{
+    ViewBag.Title = "Удаление фермы";
+}
+
+<div class="row">
+    <h2>Удаление фермы</h2>
+</div>
+<div class="row">
+    <form class="form-horizontal" role="form" method="post">
+        @Html.AntiForgeryToken()
+        <fieldset class="for-panel">
+            <legend>Сведения</legend>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-horizontal">
+                        <label class="col-xs-5 control-label">@Html.DisplayNameFor(model => model.Name)</label>
+                        <p class="form-control-static">@Html.DisplayFor(model => model.Name)</p>
+                        <label class="col-xs-5 control-label">@Html.DisplayNameFor(model => model.FarmerName) </label>
+                        <p class="form-control-static">@Html.DisplayFor(model => model.FarmerName)</p>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-horizontal">
+                        <label class="col-xs-4 control-label">@Html.DisplayNameFor(model => model.RegionName)</label>
+                        <p class="form-control-static">@Html.DisplayFor(model => model.RegionName)</p>
+                        <label class="col-xs-4 control-label">@Html.DisplayNameFor(model => model.Area)</label>
+                        <p class="form-control-static">@Html.DisplayFor(model => model.Area)</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="pull-right">
+                        @Html.ActionLink("Назад к списку ферм", "List", null, new { @class = "btn btn-default", @role = "button" })
+                        <button type="submit" class="btn btn-primary btn-danger">Удалить</button>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

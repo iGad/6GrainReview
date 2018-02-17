@@ -1,0 +1,52 @@
+﻿@model IEnumerable<FarmApp.ViewModels.FarmViewModel>
+
+@{
+    ViewBag.Title = "Список ферм";
+}
+
+<h2>Список ферм</h2>
+
+<p>
+    @Html.ActionLink("Добавить новую", "Create", null, new { @class = "btn btn-success" })    
+</p>
+<div class="table-responsive">
+    <table class="table table-hover table-condensed">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FarmerName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.RegionName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Area)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FarmerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegionName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Area)
+                </td>
+                <td>
+                    @Html.ActionLink("X", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

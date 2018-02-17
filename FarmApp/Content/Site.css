@@ -1,0 +1,44 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+fieldset.for-panel {
+    background-color: #fcfcfc;
+    border: 1px solid #999;
+    border-radius: 4px;
+    padding: 15px 10px;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    background-color: #f9fdfd;
+    margin-bottom: 12px;
+}
+
+fieldset.for-panel legend {
+    background-color: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: #4381ba;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 10px;
+    margin: inherit;
+    padding: 7px;
+    width: auto;
+    background-color: #d9edf7;
+    margin-bottom: 0;
+}
+
