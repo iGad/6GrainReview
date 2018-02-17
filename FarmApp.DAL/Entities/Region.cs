@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FarmApp.DAL
+namespace FarmApp.DAL //не соответствует фактическому расположению, должно быть FarmApp.DAL.Entities
 {
     /// <summary>
     /// Регион
@@ -24,11 +24,11 @@ namespace FarmApp.DAL
         /// <summary>
         /// Фермы
         /// </summary>
-        public virtual List<Farm> Farms { get; set; }
+        public virtual List<Farm> Farms { get; set; }//я против неявной ленивой загрузки, т.к. можно легким движением серьезно ухудшить производительность. Получение значения свойства не должно занимать неопределенное время.
 
         public Region()
         {
-            Farms = new List<Farm>();
+            Farms = new List<Farm>(); //удалить
         }
     }
 }

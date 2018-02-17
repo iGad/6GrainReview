@@ -6,6 +6,10 @@ using System.Linq;
 
 namespace FarmApp.DAL.Repositories
 {
+    //все замечания в IRepository<TEntity> актульны и тут
+    //EFRepository стоит переименовать, например, в GenericRepository. В наименовании нежелательно использовать аббревиатуры
+    //здесь почему-то глобальные поля называются с _, а в EFUnitOfWork без _. Надо привести к единому стилю
+    //_context и _dbSet надо сделать readonly.
     /// <summary>
     /// Реализация репозитория в контексте EF
     /// </summary>
@@ -28,7 +32,7 @@ namespace FarmApp.DAL.Repositories
 
 		public IEnumerable<TEntity> Get(Func<TEntity, bool> predicate)
 		{
-			return _dbSet.Where(predicate);
+			return _dbSet.Where(predicate);//в таком случае Where это Extension-метод для IEnumerable, а не для IQueryable, соответветственно, произойдет запрос всех данных таблицы в память и только потом выполнится where
 		}
 		public TEntity FindById(int id)
 		{
@@ -41,7 +45,7 @@ namespace FarmApp.DAL.Repositories
 		}
 		public void Update(TEntity item)
 		{
-			_context.Entry(item).State = EntityState.Modified;
+			_context.Entry(item).State = EntityState.Modified;//DbContext и сам в состоянии это сделать если сущность изменилась
 		}
 		public void Remove(TEntity item)
 		{

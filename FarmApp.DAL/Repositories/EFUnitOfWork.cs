@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace FarmApp.DAL.Repositories
 {
+    //Смущает реализация IDisposable. По-моему не хватает деструктора, который вызывает Dispose(false), хотя, вообще говоря, когда нет неуправляемых ресурсов, смысла в IDisposable мало
+    //Приватные поля лучше именовать по-особому или обращаться к ним строго через this, чтобы не было путаницы с локальными переменными
     /// <summary>
     /// Реализация паттерна uow
     /// </summary>
@@ -34,8 +36,9 @@ namespace FarmApp.DAL.Repositories
 		{
 			context = new FarmContext();
 		}
-
-		public IRepository<Agriculture> Agricultures
+        //можно воспользоваться ?? и фишками с# 6.0 и записать эти 10 строк как
+        //public IRepository<Agriculture> Agricultures => agricultures ?? (agricultures = new EFRepository<Agriculture>(context));
+        public IRepository<Agriculture> Agricultures
 		{
 			get
 			{

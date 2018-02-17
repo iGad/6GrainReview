@@ -9,7 +9,7 @@ namespace FarmApp.DAL.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = true;//очень плохое решение, т.к. тер€етс€ возможность €вно следить за структурой Ѕƒ. Ќапример, программист внес небольшое изменение, не ожида€, что Ѕƒ изменитс€, запустил приложение и так и не узнал об этом, что может привести к большим проблемам
 			ContextKey = "DAL.MigratoryFarmsContext";
 		}
 
