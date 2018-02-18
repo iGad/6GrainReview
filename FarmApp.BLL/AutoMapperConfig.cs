@@ -13,6 +13,7 @@ namespace FarmApp.BLL
     {
         public static Mapper GetMapper()
         {
+            //не хватает cfg.CreateMap<Farm, FarmDto>(); и cfg.CreateMap<RegionDto, Region>(); но видимо всё и без этого работает (как оказалось, не всё работает)
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<FarmCropDto, Farm>();

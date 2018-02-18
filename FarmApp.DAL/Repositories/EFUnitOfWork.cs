@@ -8,12 +8,17 @@ using System.Threading.Tasks;
 
 namespace FarmApp.DAL.Repositories
 {
-    //Смущает реализация IDisposable. По-моему не хватает деструктора, который вызывает Dispose(false), хотя, вообще говоря, когда нет неуправляемых ресурсов, смысла в IDisposable мало
+    //Смущает реализация IDisposable. По-моему не хватает деструктора, который вызывает Dispose(false).
     //Приватные поля лучше именовать по-особому или обращаться к ним строго через this, чтобы не было путаницы с локальными переменными
+    //Не сразу заметил - явное создание FarmContext при использовании DI-container'a это просто фейл. 
+    //Нужно как минимум внедрять FarmContext в конструктор, а вообще нужно внедрять все реализации репозиториев в конструкторе. 
+    //Тогда поля станут readonly и заполнятся в конструкторе.
+    //Тогда не нужна реализация IDisposable, т.к. контейнер сам будет управлять жизненным циклом контекста. Вообще, создание репозиториев очень быстрая операция и большой разницы в произвотительности не будет.
+
     /// <summary>
     /// Реализация паттерна uow
     /// </summary>
-	public class EFUnitOfWork : IUnitOfWork
+    public class EFUnitOfWork : IUnitOfWork
 	{
 		private FarmContext context;
 
@@ -27,11 +32,12 @@ namespace FarmApp.DAL.Repositories
 
 		private IRepository<Region> regions;
 
+        //этот конструктор не нужен
 		public EFUnitOfWork(string connectionString)
 		{
 			context = new FarmContext(connectionString);
 		}
-
+        //в конструкторе лучше внедрять все репозитории
 		public EFUnitOfWork()
 		{
 			context = new FarmContext();
@@ -102,7 +108,7 @@ namespace FarmApp.DAL.Repositories
 		{
 			context.SaveChanges();
 		}
-
+        //объявление глобальной переменной в середине класса - моветон, хотя тут и сгенерированный код, можно было переменную вынести к остальным
 		private bool disposed = false;
 
 		public virtual void Dispose(bool disposing)

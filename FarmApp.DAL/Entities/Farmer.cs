@@ -28,7 +28,7 @@ namespace FarmApp.DAL //не соответствует фактическому
 
         public Farmer()
         {
-            Farms = new List<Farm>();
+            Farms = new List<Farm>();//удалить
         }
     }
 }

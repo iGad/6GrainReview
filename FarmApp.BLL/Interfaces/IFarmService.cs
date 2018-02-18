@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace FarmApp.BLL.Interfaces
 {
+    //замечания в FarmService
     /// <summary>
     /// Предоставляет набор операций бизнес-логики
     /// </summary>
