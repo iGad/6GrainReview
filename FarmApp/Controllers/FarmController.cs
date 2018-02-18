@@ -56,7 +56,64 @@ namespace FarmApp.Controllers
         //маппинг через Select(x=>_mapper.Map<>(x))
         //создать методы для cache.Get и cache.Add. в Get передавать строкой наименование и region, а возвращать или object или стразу IEnumerable<NamedItemViewModel>, в зависимости от того, что туда будем складывать. В Add передавать строкой наименование, объект и region. 
         //120 вынести в константы или настройку, можно заменить на 120000 миллисекунд
-        //если оставить текущий подход (без запросов с фронта), то вынести заполнение ViewBag в отдельный метод
+        //если оставить текущий подход (без запросов с фронта), то вынести заполнение ViewBag в отдельный метод, а получение свойств вынести с свои методы:
+        /*
+         private const string RegionsCacheKey = "regions";
+        private const string FarmersCacheKey = "farmers";
+        private const string AgricultureCacheKey = "agricultures";
+        private const int CacheExpirationTimeout = 120000;
+
+        private IEnumerable<NamedItemViewModel> GetCollectionFromCache(MemoryCache cache, string key, string regionName = null)
+        {
+            return cache.Get(key, regionName) as IEnumerable<NamedItemViewModel>;
+        }
+
+        private void SetDataToCache(MemoryCache cache, object data, string key, string regionName = null)
+        {
+            cache.Add(key, data, new DateTimeOffset(DateTime.Now.AddSeconds(CacheExpirationTimeout)));
+        }
+
+        private IEnumerable<NamedItemViewModel> GetRegions(MemoryCache cache)
+        {
+            var regions = GetCollectionFromCache(cache, RegionsCacheKey);
+            if (regions == null)
+            {
+                regions = _farmService.GetRegions().Select(x => _mapper.Map<NamedItemViewModel>(x));
+                SetDataToCache(cache, regions, RegionsCacheKey);
+            }
+            return regions;
+        }
+
+        private IEnumerable<NamedItemViewModel> GetFarmers(MemoryCache cache)
+        {
+            var regions = GetCollectionFromCache(cache, FarmersCacheKey);
+            if (regions == null)
+            {
+                regions = _farmService.GetFarmers().Select(x => _mapper.Map<NamedItemViewModel>(x));
+                SetDataToCache(cache, regions, FarmersCacheKey);
+            }
+            return regions;
+        }
+
+        private IEnumerable<NamedItemViewModel> GetAgricultures(MemoryCache cache)
+        {
+            var regions = GetCollectionFromCache(cache, AgricultureCacheKey);
+            if (regions == null)
+            {
+                regions = _farmService.GetAgricultures().Select(x => _mapper.Map<NamedItemViewModel>(x));
+                SetDataToCache(cache, regions, AgricultureCacheKey);
+            }
+            return regions;
+        }
+        private void FillViewBagForCreate()
+        {
+            MemoryCache cache = MemoryCache.Default;
+            ViewBag.Regions = GetRegions(cache);
+            ViewBag.Farmers = GetFarmers(cache);
+            ViewBag.Agricultures = GetAgricultures(cache);
+        }
+             */
+
         /// <summary>
         /// Добавление фермы
         /// </summary>

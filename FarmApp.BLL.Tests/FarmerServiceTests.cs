@@ -147,13 +147,13 @@ namespace FarmApp.BLL.Tests
             public void AddFarmCrop_WhenFarmCropValid_IncreaseTotalFarmCount()
             {
                 var farmRepo = CreateFarmRepository();//возвращает TestRepository<Farm> : IRepository<Farm>
-                var oldCount = farmRepo.FarmList.Count;//FarmList это список, имитирующий таблицу
+                var oldCount = farmRepo.List.Count;//List это список, имитирующий таблицу
                 var service = CreateService(farmRepo);//В конструктор передается конкретно этот репозиторий
                 var farmCropDto = CreateValidFarmCropDto();
 
                 service.AddFarmCrop(farmCropDto);
 
-                Assert.AreEqual(oldCount + 1, farmRepo.FarmList.Count);
+                Assert.AreEqual(oldCount + 1, farmRepo.List.Count);
             }
 
             [Test]
@@ -163,14 +163,14 @@ namespace FarmApp.BLL.Tests
             [TestCase(nameof(Farm.Name))]
             public void AddFarmCrop_WhenFarmCropValid_AddFarmWithExpectedProperties(string propertyName)
             {
-                var farmRepo = CreateFarmRepository();//возвращает TestRepository<Farm> : IRepository<Farm>
-                var oldCount = farmRepo.FarmList.Count;//FarmList это список, имитирующий таблицу
-                var service = CreateService(farmRepo);//В конструктор передается конкретно этот репозиторий
+                var farmRepo = CreateFarmRepository();
+                var oldCount = farmRepo.List.Count;
+                var service = CreateService(farmRepo);
                 var farmCropDto = CreateValidFarmCropDto();
 
                 service.AddFarmCrop(farmCropDto);
 
-                var farm = farmRepo.FarmList.Last();
+                var farm = farmRepo.List.Last();
                 Assert.That(farm, Has.Property(propertyName).EqualTo(GetValue(farmCropDto, propertyName)));            
             }
              */
