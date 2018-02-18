@@ -15,6 +15,8 @@ namespace FarmApp
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
 
+        //1. Я бы добавил какое-нибудь логгирование. В данном случае информация об исключении теряется
+        //2. Лучше возвращать ответ со статусом отличным от 200, а не делать редирект, так пользователь не поймет что случилось и, как минимум, потеряются все введенные данные (если было заполение формы)
         protected void Application_Error(object sender, EventArgs e)
         {
             Exception exception = Server.GetLastError();

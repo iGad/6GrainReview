@@ -8,7 +8,8 @@ namespace FarmApp.Util
 {
 	public class AutofacConfig
 	{
-		public static void ConfigureContainer()
+        //в AutofacModule из BLL убрать регистрацию IMapper, а тут её добавить, так же SingleInstance
+        public static void ConfigureContainer()
 		{
 			// получаем экземпляр контейнера
 			var builder = new ContainerBuilder();

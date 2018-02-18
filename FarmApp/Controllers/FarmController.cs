@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 
 namespace FarmApp.Controllers
 {
+    //я отвык видеть вообще какую-либо логику в контроллерах, т.к. мы их используем только для получения страницы (return View()) или для получения данных, которые предоставляет сервис (return service.GetSomething() или return Json(service.GetSomething()))
+    //я, как человек, который привык к разделению фронта и бэка, в методах, возвращающих View не заполнял бы никакие модели, а получал их отдельным запросом с фронта, чтобы пользователь видел, что страница загрузилась, а данные еще не загрузились (если это какая-то длительная операция)
+    //
+    //глобальные поля не readonly и имена опять не отличаются от локальных переменных
 	/// <summary>
 	/// Работа с фермами
 	/// </summary>
@@ -31,18 +35,28 @@ namespace FarmApp.Controllers
 			farmService = service;
 			mapper = map;
 		}
-		
-		/// <summary>
-		/// Список ферм
-		/// </summary>
-		/// <returns></returns>
-		public ActionResult List()
+
+        //я за явное указание метода (GET, POST, UPDATE, DELETE)
+        //опять непонятное приведение AsQueryable и лишний вызов ToList. Я бы написал _farmService.GetAllFarms().Select(x=>_mapper.Map<Farm,FarmViewModel>(x))
+        /// <summary>
+        /// Список ферм
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult List()
         {
 			var farms = farmService.GetFarms().AsQueryable().ProjectTo<FarmViewModel>(mapper.ConfigurationProvider).ToList();
 			
 			return View(farms);
         }
 
+        //честно, ни разу не использовал MemoryCache, но замысел понятен, вопрос в том как это тестировать. Я пробовал подменять статические методы через FakeReferences и Shim, но это работает только с MSTests
+        //я бы сделал получение каждого списка отдельным запросом, чтобы страница быстрее загрузилась и отобразилась
+        //хардкодные строки надо вынести в константы класса (если они только здесь используются)
+        //переименовать переменные, rc - regions, fc - farmers, ac - agricultures
+        //маппинг через Select(x=>_mapper.Map<>(x))
+        //создать методы для cache.Get и cache.Add. в Get передавать строкой наименование и region, а возвращать или object или стразу IEnumerable<NamedItemViewModel>, в зависимости от того, что туда будем складывать. В Add передавать строкой наименование, объект и region. 
+        //120 вынести в константы или настройку, можно заменить на 120000 миллисекунд
+        //если оставить текущий подход (без запросов с фронта), то вынести заполнение ViewBag в отдельный метод
         /// <summary>
         /// Добавление фермы
         /// </summary>
@@ -80,6 +94,12 @@ namespace FarmApp.Controllers
             return View(new FarmCropViewModel());
         }
 
+        
+        //для заполнения ViewBag использовать метод, из замечания к прошлому методу.
+        //делать валидацию на сервере это уже весьма устарело....но ладно, пусть будет так.
+        //не понял смысла в валидации Area и Gather здесь, если это есть в AddFarmCrop, причем с другим текстом. Если уж делать валидацию через исключения, то так делать всегда.
+        //я против использования исключений, которые будут очень часто возникать, т.к. это влияет на производительность, в данном случае допускаю такое использование.
+        //в итоге заполнение ViewBag - 1 строка, проверка if(!ModelState.IsValid), try-catch и redirect
         [HttpPost]
         public ActionResult Create(FarmCropViewModel model)
         {
@@ -121,6 +141,7 @@ namespace FarmApp.Controllers
             return RedirectToAction("List");
         }
 
+        //переименовать Id в id
         /// <summary>
         /// Удаление фермы
         /// </summary>
@@ -135,6 +156,8 @@ namespace FarmApp.Controllers
             return View(farmModel);
         }
 
+        //переименовать Id в id
+        //
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int Id, FormCollection formCollection)

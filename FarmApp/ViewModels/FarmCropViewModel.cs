@@ -6,6 +6,9 @@ using System.Web;
 
 namespace FarmApp.ViewModels
 {
+    //Хардкодные строки заменить на ресурсы
+    //не понял почему вдруг переменные значимого типа стали Nullable и при этом Required. Может я чего-то не знаю или не помню, я валидацию на основе атрибутов очень давно не использовал
+    //
     public class FarmCropViewModel
     {
         [Display(Name = "Наименование")]

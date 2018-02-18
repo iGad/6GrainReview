@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace FarmApp.BLL
 {
+    //нужно объединить с AutoMapperConfig из FarmApp.Web, например здесь принимать в качестве параметра IMapperConfigurationExpression и его же возвращать
     public class AutoMapperConfig
     {
         public static Mapper GetMapper()

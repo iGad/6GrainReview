@@ -6,7 +6,8 @@ using System.Web;
 
 namespace FarmApp.ViewModels
 {
-	public class FarmViewModel
+    //Хардкодные строки заменить на ресурсы
+    public class FarmViewModel
 	{
 		public int Id { get; set; }
 

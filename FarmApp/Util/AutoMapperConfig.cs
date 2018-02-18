@@ -8,6 +8,7 @@ using System.Web;
 
 namespace FarmApp.Util
 {
+    //нужно объединить с AutoMapperConfig из проекта BLL (например в том методе принимать IMapperConfigurationExpression), чтобы только в одном месте создавался и регистрировался маппер
     public class AutoMapperConfig
     {
         public static Mapper GetMapper()
